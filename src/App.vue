@@ -1,0 +1,20 @@
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+import BasicLayout from "@/layouts/BasicLayout.vue";
+import {useLoginUserStore} from "@/stores/useLoginUserStore";
+const loginUserStore = useLoginUserStore()
+loginUserStore.fetchLoginUser()
+</script>
+
+<template>
+  <div id="app">
+    <BasicLayout></BasicLayout>
+  </div>
+</template>
+
+<style scoped>
+#app {
+
+}
+</style>
