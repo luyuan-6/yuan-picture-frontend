@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import BasicLayout from "@/layouts/BasicLayout.vue";
-import {useLoginUserStore} from "@/stores/useLoginUserStore";
-const loginUserStore = useLoginUserStore()
-loginUserStore.fetchLoginUser()
+import BasicLayout from '@/layouts/BasicLayout.vue'
+import { useLoginUserStore } from '@/stores/useLoginUserStore'
+// const loginUserStore = useLoginUserStore()
+// loginUserStore.fetchLoginUser()
 </script>
 
 <template>
@@ -15,6 +13,5 @@ loginUserStore.fetchLoginUser()
 
 <style scoped>
 #app {
-
 }
 </style>
