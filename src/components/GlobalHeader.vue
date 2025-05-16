@@ -45,13 +45,13 @@
 </template>
 
 <script setup lang="ts">
-import {computed, h, ref} from 'vue'
+import { computed, h, ref } from 'vue'
 import { HomeOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons-vue'
 import { MenuProps, message } from 'ant-design-vue'
-import {RouteRecordRaw, useRouter} from 'vue-router'
+import { RouteRecordRaw, useRouter } from 'vue-router'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
 import { userLogoutUsingPost } from '@/api/userController'
-import checkAccess from "@/access/checkAccess";
+import checkAccess from '@/access/checkAccess'
 // 当前选中菜单
 const current = ref<string[]>([])
 const loginUserStore = useLoginUserStore()
@@ -66,6 +66,11 @@ const originMenus = [
     key: '/admin/userManage',
     label: '用户管理',
     title: '用户管理',
+  },
+  {
+    key: '/add_picture',
+    label: '创建图片',
+    title: '创建图片',
   },
 ]
 // 过滤菜单项
@@ -132,8 +137,6 @@ const doMenuClick = ({ key }: { key: string }) => {
   })
 }
 
-
-
 // 注销
 const doLogout = async () => {
   const res = await userLogoutUsingPost()
@@ -149,9 +152,6 @@ const doLogout = async () => {
     message.error('退出登录失败' + res.data.message)
   }
 }
-
-
-
 </script>
 <style scoped>
 .title-bar {
