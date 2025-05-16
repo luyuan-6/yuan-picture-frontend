@@ -72,6 +72,11 @@ const originMenus = [
     label: '创建图片',
     title: '创建图片',
   },
+  {
+    key: '/admin/pictureManage',
+    label: '图片管理',
+    title: '图片管理',
+  }
 ]
 // 过滤菜单项
 // const filterMenuItems = (menus = [] as MenuProps['items']) => {
