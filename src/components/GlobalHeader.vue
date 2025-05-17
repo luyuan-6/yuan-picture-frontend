@@ -78,10 +78,10 @@ const originMenus = [
     title: '图片管理',
   }
 ]
-// 过滤菜单项
+// // 过滤菜单项
 // const filterMenuItems = (menus = [] as MenuProps['items']) => {
 //   return menus?.filter((item) => {
-//     if (item.key.startsWith('/admin')) {
+//     if (item?.key?.startsWith('/admin')) {
 //       const loginUser = loginUserStore.loginUser
 //       if (!loginUser || loginUser.userRole !== 'admin'){
 //         return false
@@ -90,6 +90,9 @@ const originMenus = [
 //     return true
 //   })
 // }
+// // 展示在菜单的路由数组
+// const menus = computed(() => filterMenuItems(originMenus))
+
 const menuToRouteItem = (menu: any): RouteRecordRaw => {
   // 获取所有路由
   const routes = router.getRoutes()
@@ -111,7 +114,7 @@ const filterMenus = (menus = [] as MenuProps['items']) => {
       return true
     }
 
-    // 如果有hideInMenu标记为true，则隐藏
+    // 如果有 hideInMenu 标记为true，则隐藏
     if (item.meta?.hideInMenu) {
       return false
     }
@@ -126,8 +129,6 @@ const menus = computed(() => {
   return filterMenus(originMenus)
 })
 
-// 展示在菜单的路由数组
-// const items = computed(() => filterMenuItems(originItems))
 
 const router = useRouter()
 // 监听路由变化，更新当前选中菜单
