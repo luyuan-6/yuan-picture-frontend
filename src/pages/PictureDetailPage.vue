@@ -78,7 +78,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { deletePictureUsingPost, getPictureVoByIdUsingGet } from '@/api/pictureController'
-import { downloadImage, formatFileSize } from '@/utils/index'
+import { downloadImage, formatFileSize } from '@/utils/index.ts'
 import { DeleteOutlined, DownloadOutlined, EditOutlined } from '@ant-design/icons-vue'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
 import router from '@/router'
