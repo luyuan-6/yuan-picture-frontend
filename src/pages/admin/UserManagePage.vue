@@ -20,7 +20,7 @@
     >
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'userAvatar'">
-          <a-image :src="record.userAvatar" width="50" />
+          <a-image :src="record.userAvatar" :width="120" />
         </template>
         <template v-else-if="column.dataIndex === 'userRole'">
           <div v-if="record.userRole === 'admin'">
@@ -31,7 +31,7 @@
           </div>
         </template>
         <template v-if="column.dataIndex === 'createTime'">
-          {{ dayjs(record.createTime).format('YYYY-MM-DD HH:mm:ss') }}
+          {{ dayjs.utc(record.createTime).format('YYYY-MM-DD HH:mm:ss') }}
         </template>
         <template v-else-if="column.key === 'action'">
           <a-button danger @click="doDelete(record.id)">删除</a-button>
@@ -45,6 +45,9 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import { deleteUserUsingPost, listUserVoByPageUsingPost } from '@/api/userController'
 import { message } from 'ant-design-vue'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
+
 // 表格列
 const columns = [
   {

@@ -56,10 +56,10 @@
           <div>大小 ： {{ formatFileSize(record.picSize) }}</div>
         </template>
         <template v-if="column.dataIndex === 'createTime'">
-          {{ dayjs(record.createTime).format('YYYY-MM-DD HH:mm:ss') }}
+          {{ dayjs.utc(record.createTime).format('YYYY-MM-DD HH:mm:ss') }}
         </template>
         <template v-if="column.dataIndex === 'editTime'">
-          {{ dayjs(record.editTime).format('YYYY-MM-DD HH:mm:ss') }}
+          {{ dayjs.utc(record.editTime).format('YYYY-MM-DD HH:mm:ss') }}
         </template>
         <template v-else-if="column.key === 'action'">
           <a-button danger @click="doDelete(record.id)">删除</a-button>
@@ -74,9 +74,11 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
 import { message } from 'ant-design-vue'
-import dayjs from 'dayjs'
 import { deletePictureUsingPost, listPictureByPageUsingPost } from '@/api/pictureController'
 import { formatFileSize } from '../../utils'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 // 表格列
 const columns = [
   {

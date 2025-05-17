@@ -44,13 +44,15 @@ import { reactive } from 'vue'
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { userLoginUsingPost } from '@/api/userController'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
-import router from '@/router' // 用于接受表单输入的值
+import router from '@/router'
 import { message } from 'ant-design-vue'
 
+// 用于接受表单输入的值
 const formState = reactive<API.UserLoginRequest>({
   userAccount: '',
   userPassword: '',
 })
+
 const loginUserStore = useLoginUserStore()
 /**
  * 提交表单
