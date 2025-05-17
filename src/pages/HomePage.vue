@@ -39,7 +39,7 @@
       <template #renderItem="{ item: picture }">
         <a-list-item>
           <!-- 单张图片 -->
-          <a-card hoverable>
+          <a-card hoverable @click="doClickPicture(picture)">
             <template #cover>
               <img
                 style="height: 180px; object-fit: cover"
@@ -73,6 +73,7 @@ import {
   listPictureVoByPageUsingPost,
 } from '@/api/pictureController'
 import { message } from 'ant-design-vue'
+import {useRouter} from "vue-router";
 
 const dataList = ref([])
 const total = ref(0)
@@ -159,6 +160,12 @@ const getTagCategoryOptions = async () => {
 onMounted(() => {
   getTagCategoryOptions()
 })
+const router = useRouter()
+const doClickPicture = (picture: API.PictureVO) => {
+  router.push({
+    path: `/picture/${picture.id}`
+  })
+}
 </script>
 
 <style scoped>

@@ -9,6 +9,7 @@ import { useLoginUserStore } from '@/stores/useLoginUserStore'
 import ACCESS_ENUM from '@/access/accessEnum'
 import checkAccess from '@/access/checkAccess'
 import PictureManagePage from '@/pages/admin/PictureManagePage.vue'
+import PictureDetailPage from "@/pages/PictureDetailPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +49,12 @@ const router = createRouter({
       meta: {
         access: ACCESS_ENUM.ADMIN,
       },
+    },
+    {
+      path: '/picture/:id',
+      name: '图片详情',
+      component: PictureDetailPage,
+      props: true,
     },
     {
       path: '/about',
