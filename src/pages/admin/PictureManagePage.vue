@@ -1,10 +1,12 @@
 <template>
   <div id="pictureManagePage">
-    <a-flex justify="space-between" >
+    <a-flex justify="space-between">
       <h2>图片管理</h2>
-      <a-space><a-button type="primary" herf="/add_picture" target="_blank">+ 创建图片</a-button></a-space>
+      <a-space
+        ><a-button type="primary" herf="/add_picture" target="_blank">+ 创建图片</a-button></a-space
+      >
     </a-flex>
-
+    <!--    搜索框-->
     <a-form layout="inline" :model="searchParams" @finish="doSearch" style="margin-top: 16px">
       <a-form-item label="关键词" name="searchText">
         <a-input
@@ -51,8 +53,7 @@
           <div>宽度 ： {{ record.picWidth }}</div>
           <div>高度 ： {{ record.picHeight }}</div>
           <div>宽高比 ： {{ record.picScale }}</div>
-          <div>大小 ： {{ formatFileSize(record.picSize) }}
-            </div>
+          <div>大小 ： {{ formatFileSize(record.picSize) }}</div>
         </template>
         <template v-if="column.dataIndex === 'createTime'">
           {{ dayjs(record.createTime).format('YYYY-MM-DD HH:mm:ss') }}
@@ -75,7 +76,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import { message } from 'ant-design-vue'
 import dayjs from 'dayjs'
 import { deletePictureUsingPost, listPictureByPageUsingPost } from '@/api/pictureController'
-import {formatFileSize} from "../../utils";
+import { formatFileSize } from '../../utils'
 // 表格列
 const columns = [
   {
@@ -132,7 +133,7 @@ const dataList = ref([])
 const total = ref(0)
 
 // 搜索条件
-const searchParams = reactive(<API.UserQueryRequest>{
+const searchParams = reactive(<API.PictureQueryRequest>{
   current: 1,
   pageSize: 2,
   sortField: 'createTime',
