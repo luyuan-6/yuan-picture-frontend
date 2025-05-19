@@ -5,7 +5,7 @@
     </h2>
     <!-- 选择上传方式 -->
     <a-tabs v-model:activeKey="uploadType"
-    >>
+    >
       <a-tab-pane key="file" tab="文件上传">
         <PictureUpload :picture="picture" :onSuccess="onSuccess" />
       </a-tab-pane>
@@ -134,13 +134,11 @@ const getOldPicture = async () => {
     if (res.data.code === 0 && res.data.data) {
       const data = res.data.data
       // 回填数据
-      console.log(data)
       picture.value = data
       pictureForm.name = data.name
       pictureForm.introduction = data.introduction
       pictureForm.category = data.category
       pictureForm.tags = data.tags
-      console.log(pictureForm)
     }
   }
 }

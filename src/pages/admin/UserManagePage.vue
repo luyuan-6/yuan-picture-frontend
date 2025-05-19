@@ -91,7 +91,7 @@ const total = ref(0)
 // 搜索条件
 const searchParams = reactive(<API.UserQueryRequest>{
   current: 1,
-  pageSize: 2,
+  pageSize: 10,
 })
 
 // 分页参数

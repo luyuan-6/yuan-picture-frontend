@@ -1,10 +1,11 @@
 <template>
   <div id="pictureManagePage">
     <a-flex justify="space-between">
-      <h2>图片管理</h2>
-      <a-space
-        ><a-button type="primary" herf="/add_picture" target="_blank">+ 创建图片</a-button></a-space
-      >
+      <h2>批量创建图片</h2>
+      <a-space>
+        <a-button type="primary" href="/add_picture" target="_blank">+ 创建图片</a-button>
+        <a-button type="primary" href="/add_picture/batch" target="_blank" ghost>+ 批量创建图片</a-button>
+      </a-space>
     </a-flex>
     <!--    搜索框-->
     <a-form layout="inline" :model="searchParams" @finish="doSearch" style="margin-top: 16px">
@@ -191,7 +192,7 @@ const total = ref(0)
 // 搜索条件
 const searchParams = reactive(<API.PictureQueryRequest>{
   current: 1,
-  pageSize: 2,
+  pageSize: 10,
   sortField: 'createTime',
   sortOrder: 'descend',
 })
