@@ -227,7 +227,13 @@ declare namespace API {
     filepath?: string
   }
 
+  type uploadPictureByUrlUsingPOSTParams = {
+    fileUrl?: string
+    id?: number
+  }
+
   type uploadPictureUsingPOSTParams = {
+    fileUrl?: string
     id?: number
   }
 
@@ -295,5 +301,9 @@ declare namespace API {
     vipCode?: string
     vipExpireTime?: string
     vipNumber?: number
+  }
+  type PictureUploadRequest = {
+    fileUrl?: string
+    id?: number
   }
 }

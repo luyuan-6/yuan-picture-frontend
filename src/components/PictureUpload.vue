@@ -19,8 +19,8 @@
 import { ref } from 'vue'
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
-import type { UploadChangeParam, UploadProps } from 'ant-design-vue'
-import { uploadFileUsingPost, uploadPictureUsingPost } from '@/api/pictureController'
+import type { UploadProps } from 'ant-design-vue'
+import { uploadPictureUsingPost } from '@/api/pictureController'
 
 const fileList = ref([])
 const loading = ref<boolean>(false)
@@ -31,6 +31,7 @@ interface Props {
   picture?: API.PictureVO
   onSuccess: (newPicture: API.PictureVO) => void
 }
+
 const props = defineProps<Props>()
 
 /**
@@ -77,6 +78,7 @@ const handleUpload = async ({ file }: any) => {
   min-height: 152px;
   min-width: 152px;
 }
+
 .picture-upload img {
   max-width: 100%;
   max-height: 480px;

@@ -33,7 +33,6 @@
     <a-list
       :grid="{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 5, xxl: 6 }"
       :data-source="dataList"
-      :pagination="pagination"
       :loading="loading"
     >
       <template #renderItem="{ item: picture }">
@@ -63,6 +62,14 @@
         </a-list-item>
       </template>
     </a-list>
+    <a-pagination
+      style="text-align: right"
+      v-model:current="searchParams.current"
+      v-model:pageSize="searchParams.pageSize"
+      :total="total"
+      @change="onPageChange"
+    >
+    </a-pagination>
   </div>
 </template>
 <script setup lang="ts">
@@ -73,7 +80,7 @@ import {
   listPictureVoByPageUsingPost,
 } from '@/api/pictureController'
 import { message } from 'ant-design-vue'
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router'
 
 const dataList = ref([])
 const total = ref(0)
@@ -91,19 +98,25 @@ const searchParams = reactive<API.PictureQueryRequest>({
   sortField: 'createTime',
   sortOrder: 'descend',
 })
+// 分页函数
+const onPageChange = (page: number, pageSize: number) => {
+  searchParams.current = page
+  searchParams.pageSize = pageSize
+  fetchData()
+}
 
-const pagination = computed(() => {
-  return {
-    current: searchParams.current ?? 1,
-    pageSize: searchParams.pageSize ?? 10,
-    total: total,
-    onChange: (page: number, pageSize: number) => {
-      searchParams.current = page
-      searchParams.pageSize = pageSize
-      fetchData()
-    },
-  }
-})
+// const pagination = computed(() => {
+//   return {
+//     current: searchParams.current ?? 1,
+//     pageSize: searchParams.pageSize ?? 10,
+//     total: total,
+//     onChange: (page: number, pageSize: number) => {
+//       searchParams.current = page
+//       searchParams.pageSize = pageSize
+//       fetchData()
+//     },
+//   }
+// })
 
 const fetchData = async () => {
   loading.value = true
@@ -146,7 +159,6 @@ const doSearch = () => {
   fetchData()
 }
 
-
 // 获取标签和分页选项
 const getTagCategoryOptions = async () => {
   const res = await listPictureTagCategoryUsingGet()
@@ -163,7 +175,7 @@ onMounted(() => {
 const router = useRouter()
 const doClickPicture = (picture: API.PictureVO) => {
   router.push({
-    path: `/picture/${picture.id}`
+    path: `/picture/${picture.id}`,
   })
 }
 </script>
