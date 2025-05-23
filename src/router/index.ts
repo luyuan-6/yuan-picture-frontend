@@ -5,12 +5,15 @@ import UserLoginPage from '@/pages/user/UserLoginPage.vue'
 import UserRegisterPage from '@/pages/user/UserRegisterPage.vue'
 import UserManagePage from '@/pages/admin/UserManagePage.vue'
 
-import { useLoginUserStore } from '@/stores/useLoginUserStore'
 import ACCESS_ENUM from '@/access/accessEnum'
-import checkAccess from '@/access/checkAccess'
 import PictureManagePage from '@/pages/admin/PictureManagePage.vue'
 import PictureDetailPage from '@/pages/PictureDetailPage.vue'
-import AddPictureBatchPage from "@/pages/AddPictureBatchPage.vue";
+import AddPictureBatchPage from '@/pages/AddPictureBatchPage.vue'
+import PersonalInfo from '@/components/PersonalInfo.vue'
+import SpaceManagePage from '@/pages/admin/SpaceManagePage.vue'
+import AddSpacePage from '@/pages/AddSpacePage.vue'
+import MySpacePage from '@/pages/MySpacePage.vue'
+import SpaceDetailPage from '@/pages/SpaceDetailPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +34,14 @@ const router = createRouter({
       component: UserRegisterPage,
     },
     {
+      path: '/user/info',
+      name: '个人中心',
+      component: PersonalInfo,
+      meta: {
+        access: ACCESS_ENUM.USER,
+      },
+    },
+    {
       path: '/admin/userManage',
       name: 'adminUserManage',
       component: UserManagePage,
@@ -42,6 +53,9 @@ const router = createRouter({
       path: '/add_picture',
       name: '创建图片',
       component: AddPicturePage,
+      meta: {
+        access: ACCESS_ENUM.USER,
+      },
     },
     {
       path: '/admin/pictureManage',
@@ -61,6 +75,42 @@ const router = createRouter({
       path: '/add_picture/batch',
       name: '批量创建图片',
       component: AddPictureBatchPage,
+      meta: {
+        access: ACCESS_ENUM.ADMIN,
+      },
+    },
+    {
+      path: '/admin/spaceManage',
+      name: '空间管理',
+      component: SpaceManagePage,
+      meta: {
+        access: ACCESS_ENUM.ADMIN,
+      },
+    },
+    {
+      path: '/add_space',
+      name: '创建空间',
+      component: AddSpacePage,
+      meta: {
+        access: ACCESS_ENUM.USER,
+      },
+    },
+    {
+      path: '/my_space',
+      name: '我的空间',
+      component: MySpacePage,
+      meta: {
+        access: ACCESS_ENUM.USER,
+      },
+    },
+    {
+      path: '/space/:id',
+      name: '空间详情',
+      component: SpaceDetailPage,
+      props: true,
+      meta: {
+        access: ACCESS_ENUM.USER,
+      },
     },
     {
       path: '/about',

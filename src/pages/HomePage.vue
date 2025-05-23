@@ -4,8 +4,8 @@
     <div class="search-bar">
       <a-input-search
         v-model:value="searchParams.searchText"
-        placeholder="从海量图片中搜索"
         enter-button="搜索"
+        placeholder="从海量图片中搜索"
         size="large"
         @search="doSearch"
       >
@@ -30,57 +30,24 @@
       </a-space>
     </div>
     <!-- 图片列表 -->
-    <a-list
-      :grid="{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 5, xxl: 6 }"
-      :data-source="dataList"
-      :loading="loading"
-    >
-      <template #renderItem="{ item: picture }">
-        <a-list-item>
-          <!-- 单张图片 -->
-          <a-card hoverable @click="doClickPicture(picture)">
-            <template #cover>
-              <img
-                style="height: 180px; object-fit: cover"
-                :alt="picture.name"
-                :src="picture.thumbnailUrl ?? picture.url"
-              />
-            </template>
-            <a-card-meta :title="picture.name">
-              <template #description>
-                <a-flex>
-                  <a-tag color="green">
-                    {{ picture.category ?? '默认' }}
-                  </a-tag>
-                  <a-tag v-for="tag in picture.tags" :key="tag">
-                    {{ tag }}
-                  </a-tag>
-                </a-flex>
-              </template>
-            </a-card-meta>
-          </a-card>
-        </a-list-item>
-      </template>
-    </a-list>
+    <PictureList :dataList="dataList" :loading="loading"></PictureList>
     <a-pagination
-      style="text-align: right"
       v-model:current="searchParams.current"
       v-model:pageSize="searchParams.pageSize"
       :total="total"
+      style="text-align: right"
       @change="onPageChange"
     >
     </a-pagination>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 // 数据
-import { computed, onMounted, reactive, ref } from 'vue'
-import {
-  listPictureTagCategoryUsingGet,
-  listPictureVoByPageUsingPost,
-} from '@/api/pictureController'
-import { message } from 'ant-design-vue'
-import { useRouter } from 'vue-router'
+import {onMounted, reactive, ref} from 'vue'
+import {listPictureTagCategoryUsingGet, listPictureVoByPageUsingPost,} from '@/api/pictureController'
+import {message} from 'ant-design-vue'
+import {useRouter} from 'vue-router'
+import PictureList from "@/components/PictureList.vue";
 
 const dataList = ref([])
 const total = ref(0)
@@ -123,6 +90,7 @@ const fetchData = async () => {
   // 转换搜索参数
   const params = {
     ...searchParams,
+    nullSpaceId: true,
     tags: [] as string[],
   }
   // 种类
@@ -185,6 +153,7 @@ const doClickPicture = (picture: API.PictureVO) => {
   max-width: 480px;
   margin: 0 auto 16px;
 }
+
 #homePage .tag-bar {
   margin-bottom: 16px;
 }

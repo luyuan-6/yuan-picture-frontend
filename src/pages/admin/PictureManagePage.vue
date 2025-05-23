@@ -3,17 +3,19 @@
     <a-flex justify="space-between">
       <h2>批量创建图片</h2>
       <a-space>
-        <a-button type="primary" href="/add_picture" target="_blank">+ 创建图片</a-button>
-        <a-button type="primary" href="/add_picture/batch" target="_blank" ghost>+ 批量创建图片</a-button>
+        <a-button href="/add_picture" target="_blank" type="primary">+ 创建图片</a-button>
+        <a-button ghost href="/add_picture/batch" target="_blank" type="primary"
+          >+ 批量创建图片
+        </a-button>
       </a-space>
     </a-flex>
     <!--    搜索框-->
-    <a-form layout="inline" :model="searchParams" @finish="doSearch" style="margin-top: 16px">
+    <a-form :model="searchParams" layout="inline" style="margin-top: 16px" @finish="doSearch">
       <a-form-item label="关键词" name="searchText">
         <a-input
           v-model:value="searchParams.searchText"
-          placeholder="请输入名称和简介搜索"
           allow-clear
+          placeholder="请输入名称和简介搜索"
         />
       </a-form-item>
       <a-form-item label="类型" name="category">
@@ -22,9 +24,9 @@
       <a-form-item label="标签" name="tags">
         <a-select
           v-model:value="searchParams.tags"
-          placeholder="请输入标签"
-          mode="tags"
           allow-clear
+          mode="tags"
+          placeholder="请输入标签"
           style="min-width: 180px"
         />
       </a-form-item>
@@ -32,13 +34,13 @@
         <a-select
           v-model:value="searchParams.reviewStatus"
           :options="PIC_REVIEW_STATUS_OPTIONS"
+          allow-clear
           placeholder="请输入审核状态"
           style="min-width: 180px"
-          allow-clear
         />
       </a-form-item>
       <a-form-item>
-        <a-button type="primary" html-type="submit">搜索</a-button>
+        <a-button html-type="submit" type="primary">搜索</a-button>
       </a-form-item>
     </a-form>
     <div style="margin-bottom: 16px"></div>
@@ -83,7 +85,10 @@
               success
               @click="handleReview(record, PIC_REVIEW_STATUS_ENUM.PASS)"
             >
-              <template #icon><CheckCircleOutlined /></template>通过
+              <template #icon>
+                <CheckCircleOutlined />
+              </template>
+              通过
             </a-button>
 
             <a-button
@@ -91,15 +96,24 @@
               warning
               @click="handleReview(record, PIC_REVIEW_STATUS_ENUM.REJECT)"
             >
-              <template #icon><CloseCircleOutlined /></template>拒绝
+              <template #icon>
+                <CloseCircleOutlined />
+              </template>
+              拒绝
             </a-button>
 
             <a-button danger @click="doDelete(record.id)">
-              <template #icon><DeleteOutlined /></template>删除
+              <template #icon>
+                <DeleteOutlined />
+              </template>
+              删除
             </a-button>
 
-            <a-button type="primary" :href="`/add_picture?id=${record.id}`" target="_blank">
-              <template #icon><EditOutlined /></template>编辑
+            <a-button :href="`/add_picture?id=${record.id}`" target="_blank" type="primary">
+              <template #icon>
+                <EditOutlined />
+              </template>
+              编辑
             </a-button>
           </a-space>
         </template>
@@ -107,7 +121,7 @@
     </a-table>
   </div>
 </template>
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, reactive, ref } from 'vue'
 import { message } from 'ant-design-vue'
 import {
@@ -129,6 +143,7 @@ import {
   PIC_REVIEW_STATUS_MAP,
   PIC_REVIEW_STATUS_OPTIONS,
 } from '../../constants/picture'
+
 dayjs.extend(utc)
 // 表格列
 const columns = [
@@ -211,7 +226,7 @@ const pagination = computed(() => {
 // 获取数据
 const fetchData = async () => {
   console.log('[fetchData] searchParams = ', searchParams)
-  const res = await listPictureByPageUsingPost({ ...searchParams })
+  const res = await listPictureByPageUsingPost({ ...searchParams, nullSpaceId: true })
   if (res.data.data) {
     dataList.value = res.data.data.records ?? []
     total.value = res.data.data.total ?? 0

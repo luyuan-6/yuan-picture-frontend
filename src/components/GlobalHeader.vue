@@ -4,7 +4,7 @@
       <a-col flex="200px">
         <RouterLink to="/">
           <div class="title-bar">
-            <img class="logo" src="../assets/logo.png" alt="logo" />
+            <img alt="logo" class="logo" src="../assets/logo.png" />
             <div class="title">图链协同平台</div>
           </div>
         </RouterLink>
@@ -12,8 +12,8 @@
       <a-col flex="auto">
         <a-menu
           v-model:selectedKeys="current"
-          mode="horizontal"
           :items="menus"
+          mode="horizontal"
           @click="doMenuClick"
         />
       </a-col>
@@ -27,6 +27,17 @@
               </a-space>
               <template #overlay>
                 <a-menu>
+                  <a-menu-item>
+                    <router-link to="/my_space">
+                      <UserOutlined />
+                      我的空间
+                    </router-link>
+                  </a-menu-item>
+
+                  <a-menu-item @click="goToInfo">
+                    <SettingOutlined />
+                    个人信息
+                  </a-menu-item>
                   <a-menu-item @click="doLogout">
                     <LogoutOutlined />
                     退出登录
@@ -36,17 +47,16 @@
             </a-dropdown>
           </div>
           <div v-else>
-            <a-button type="primary" href="/user/login">登录</a-button>
+            <a-button href="/user/login" type="primary">登录</a-button>
           </div>
         </div>
       </a-col>
     </a-row>
   </div>
 </template>
-
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, h, ref } from 'vue'
-import { HomeOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons-vue'
+import { FileAddOutlined, RocketOutlined , FolderAddTwoTone, RocketTwoTone, PictureOutlined, HomeOutlined, LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { MenuProps, message } from 'ant-design-vue'
 import { RouteRecordRaw, useRouter } from 'vue-router'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
@@ -63,20 +73,30 @@ const originMenus = [
     title: '主页',
   },
   {
-    key: '/admin/userManage',
-    label: '用户管理',
-    title: '用户管理',
-  },
-  {
     key: '/add_picture',
+    icon: () => h(FileAddOutlined),
     label: '创建图片',
     title: '创建图片',
   },
   {
+    key: '/admin/userManage',
+    icon: () => h(UserOutlined),
+    label: '用户管理',
+    title: '用户管理',
+  },
+
+  {
     key: '/admin/pictureManage',
+    icon: () => h(PictureOutlined),
     label: '图片管理',
     title: '图片管理',
-  }
+  },
+  {
+    key: '/admin/spaceManage',
+    icon: () => h(RocketOutlined),
+    label: '空间管理',
+    title: '空间管理',
+  },
 ]
 // // 过滤菜单项
 // const filterMenuItems = (menus = [] as MenuProps['items']) => {
@@ -129,7 +149,6 @@ const menus = computed(() => {
   return filterMenus(originMenus)
 })
 
-
 const router = useRouter()
 // 监听路由变化，更新当前选中菜单
 router.afterEach((to, from, next) => {
@@ -157,6 +176,12 @@ const doLogout = async () => {
   } else {
     message.error('退出登录失败' + res.data.message)
   }
+}
+
+const goToInfo = () => {
+  router.push({
+    path: '/user/info',
+  })
 }
 </script>
 <style scoped>

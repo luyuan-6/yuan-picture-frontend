@@ -24,11 +24,11 @@ import { uploadPictureUsingPost } from '@/api/pictureController'
 
 const fileList = ref([])
 const loading = ref<boolean>(false)
-const imageUrl = ref<string>('')
 
 // 接收父组件传过来的数据
 interface Props {
   picture?: API.PictureVO
+  spaceId?: number
   onSuccess: (newPicture: API.PictureVO) => void
 }
 
@@ -55,7 +55,8 @@ const beforeUpload = (file: UploadProps['fileList'][number]) => {
 const handleUpload = async ({ file }: any) => {
   loading.value = true
   // 检查图片是否已经存在了 避免每次都新增图片
-  const params = props.picture ? { id: props.picture.id } : {}
+  const params: API.uploadPictureUsingPOSTParams = props.picture ? { id: props.picture.id } : {}
+  params.spaceId = props.spaceId
   const res = await uploadPictureUsingPost(params, {}, file)
   try {
     if (res.data.code === 0 && res.data.data) {

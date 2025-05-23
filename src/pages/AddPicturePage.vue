@@ -3,14 +3,17 @@
     <h2 style="margin-bottom: 16px">
       {{ route.query?.id ? '编辑图片' : '创建图片' }}
     </h2>
+    <a-typography-paragraph v-if="spaceId" type="secondary">
+      保存至空间：<a :href="`/space/${spaceId}`" target="_blank">{{ spaceId }}</a>
+    </a-typography-paragraph>
     <!-- 选择上传方式 -->
     <a-tabs v-model:activeKey="uploadType"
     >
       <a-tab-pane key="file" tab="文件上传">
-        <PictureUpload :picture="picture" :onSuccess="onSuccess" />
+        <PictureUpload :picture="picture" :onSuccess="onSuccess" :spaceId="spaceId" />
       </a-tab-pane>
       <a-tab-pane key="url" tab="URL 上传" force-render>
-        <UrlPictureUpload :picture="picture" :onSuccess="onSuccess" />
+        <UrlPictureUpload :picture="picture" :onSuccess="onSuccess" :spaceId="spaceId" />
       </a-tab-pane>
     </a-tabs>
 <!--    <PictureUpload :picture="picture" :onSuccess="onSuccess" />-->
@@ -43,7 +46,7 @@
           />
         </a-form-item>
         <a-form-item>
-          <a-button type="primary" html-type="submit" style="width: 100%">创建</a-button>
+          <a-button type="primary" html-type="submit" style="width: 100%">提交</a-button>
         </a-form-item>
       </a-form-item>
     </a-form>
@@ -52,7 +55,7 @@
 
 <script setup lang="ts">
 import PictureUpload from '@/components/PictureUpload.vue'
-import {onMounted, reactive, ref} from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import {
   editPictureUsingPost,
   getPictureVoByIdUsingGet,
@@ -64,9 +67,14 @@ import { useRoute } from 'vue-router'
 import UrlPictureUpload from "@/components/UrlPictureUpload.vue";
 
 const uploadType = ref<'file' | 'url'>('file')
-
 const picture = ref<API.PictureVO>()
 const route = useRoute()
+
+// 获取空间id
+const spaceId = computed(() => {
+  return route.query?.spaceId
+})
+
 const onSuccess = (newPicture: API.PictureVO) => {
   picture.value = newPicture
   pictureForm.name = newPicture.name
@@ -82,6 +90,7 @@ const handleSubmit = async (values: any) => {
   console.log(values)
   const res = await editPictureUsingPost({
     id: pictureId,
+    spaceId: spaceId.value,
     ...values,
   })
   if (res.data.code === 0 && res.data.data) {
