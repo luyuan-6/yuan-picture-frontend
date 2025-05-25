@@ -14,6 +14,7 @@ import SpaceManagePage from '@/pages/admin/SpaceManagePage.vue'
 import AddSpacePage from '@/pages/AddSpacePage.vue'
 import MySpacePage from '@/pages/MySpacePage.vue'
 import SpaceDetailPage from '@/pages/SpaceDetailPage.vue'
+import SearchPicturePage from "@/pages/SearchPicturePage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -77,6 +78,14 @@ const router = createRouter({
       component: AddPictureBatchPage,
       meta: {
         access: ACCESS_ENUM.ADMIN,
+      },
+    },
+    {
+      path: '/search_picture',
+      name: '图片搜索',
+      component: SearchPicturePage,
+      meta: {
+        access: ACCESS_ENUM.USER,
       },
     },
     {

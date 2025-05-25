@@ -29,31 +29,31 @@
                 </a-flex>
               </template>
             </a-card-meta>
-            <template #actions v-if="showOp">
-              <a-space @click="e => doEdit(picture, e)">
-                <EditOutlined />
-                编辑
-              </a-space>
-              <a-space @click="e => doDelete(picture, e)">
-                <delete-outlined />
-                删除
-              </a-space>
+            <template v-if="showOp" #actions>
+              <ShareAltOutlined @click="(e) => doShare(picture, e)" />
+              <SearchOutlined @click="(e) => doSearch(picture, e)" />
+              <EditOutlined  @click="(e) => doEdit(picture, e)" />
+              <DeleteOutlined  @click="(e) => doDelete(picture, e)" />
             </template>
           </a-card>
         </a-list-item>
+
+        <ShareModal ref="shareModalRef" :link="shareLink" />
       </template>
     </a-list>
   </div>
 </template>
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons-vue'
-import {message} from "ant-design-vue";
-import {deletePictureUsingPost} from "@/api/pictureController";
+import { ShareAltOutlined, DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons-vue'
+import { message } from 'ant-design-vue'
+import { deletePictureUsingPost } from '@/api/pictureController'
+import ShareModal from "@/components/ShareModal.vue";
+import {ref} from "vue";
 
 // 定义接收父组件传递的参数
 interface Props {
-  dataList?: API.PictureVO[],
+  dataList?: API.PictureVO[]
   loading?: boolean
   showOp?: boolean
   onReload?: () => void
@@ -101,6 +101,27 @@ const doDelete = async (picture, e) => {
     message.error('删除失败')
   }
 }
+
+// 搜索
+const doSearch = (picture, e) => {
+  e.stopPropagation()
+  window.open(`/search_picture?pictureId=${picture.id}`)
+}
+
+// 分享弹窗引用
+const shareModalRef = ref()
+// 分享链接
+const shareLink = ref<string>()
+
+// 分享
+const doShare = (picture: API.PictureVO, e: Event) => {
+  e.stopPropagation()
+  shareLink.value = `${window.location.protocol}//${window.location.host}/picture/${picture.id}`
+  if (shareModalRef.value) {
+    shareModalRef.value.openModal()
+  }
+}
+
 
 </script>
 
