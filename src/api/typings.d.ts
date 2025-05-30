@@ -413,10 +413,15 @@ declare namespace API {
   }
 
   type User = {
+    coverImage?: string
     createTime?: string
     editTime?: string
+    email?: string
+    field?: string
+    gender?: string
     id?: number
     isDelete?: number
+    phone?: string
     updateTime?: string
     userAccount?: string
     userAvatar?: string
@@ -424,14 +429,21 @@ declare namespace API {
     userPassword?: string
     userProfile?: string
     userRole?: string
+    website?: string
   }
 
   type UserAddRequest = {
+    coverImage?: string
+    email?: string
+    field?: string
+    gender?: string
+    phone?: string
     userAccount?: string
     userAvatar?: string
     userName?: string
     userProfile?: string
     userRole?: string
+    website?: string
   }
 
   type UserLoginRequest = {
@@ -458,16 +470,27 @@ declare namespace API {
   }
 
   type UserUpdateRequest = {
+    coverImage?: string
+    email?: string
+    field?: string
+    gender?: string
     id?: number
+    phone?: string
     userAvatar?: string
     userName?: string
     userProfile?: string
     userRole?: string
+    website?: string
   }
 
   type UserVO = {
+    coverImage?: string
     createTime?: string
+    email?: string
+    field?: string
+    gender?: string
     id?: number
+    phone?: string
     userAccount?: string
     userAvatar?: string
     userName?: string
@@ -476,5 +499,6 @@ declare namespace API {
     vipCode?: string
     vipExpireTime?: string
     vipNumber?: number
+    website?: string
   }
 }
